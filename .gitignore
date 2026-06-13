@@ -5,3 +5,5 @@ uploads/
 
 venv/
 .venv/
+
+.vscode/
