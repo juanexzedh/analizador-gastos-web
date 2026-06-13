@@ -51,9 +51,9 @@ fecha,categoria,monto
 
 ## Capturas
 
-![Inicio](images/inicio.png)
+![Inicio](images/inicio.jpg)
 
-![Resultados](images/resultados.png)
+![Resultados](images/resultados.jpg)
 
 ## Autor
 
