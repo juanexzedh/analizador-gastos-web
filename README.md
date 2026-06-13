@@ -49,6 +49,12 @@ fecha,categoria,monto
 2025-01-03,Ocio,15000
 ```
 
+## Capturas
+
+![Inicio](images/inicio.png)
+
+![Resultados](images/resultados.png)
+
 ## Autor
 
 Juan Hernández
