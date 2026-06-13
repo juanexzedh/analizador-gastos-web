@@ -1,0 +1,40 @@
+:root{
+  --app-primary:#0d6efd;
+}
+
+body{
+  /* Fondo más oscuro para una apariencia más pro */
+  background:linear-gradient(135deg,#121826 0%,#0b1220 100%);
+  color:#e9ecef;
+}
+
+.navbar{
+  backdrop-filter: blur(6px);
+}
+
+.card{
+  background:rgba(255,255,255,0.06);
+  border-color:rgba(255,255,255,0.10) !important;
+}
+
+.text-muted{
+  color: rgba(233,236,239,0.72) !important;
+}
+
+.table{
+  --bs-table-bg: transparent;
+  color: #e9ecef;
+}
+
+.table td,
+.table th{
+  color:#e9ecef !important;
+}
+
+.table thead th{
+  border-bottom-color: rgba(255,255,255,0.12);
+}
+
+.table td, .table th{
+  vertical-align:middle;
+}

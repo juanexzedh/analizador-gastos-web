@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Analizador de Gastos</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" 
+        rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom">
+        <div class="container">
+            <span class="navbar-brand fw-semibold">Analizador de Gastos</span>
+            <span class="badge text-bg-primary align-self-center">CSV</span>
+        </div>
+    </nav>
+
+    <main class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body p-4">
+                        <h2 class="h4 mb-1">Sube tu archivo y define tu presupuesto</h2>
+                        <p class="text-muted mb-4">Te mostraremos el total de gastos y el desglose por categoría.</p>
+
+                        <form method="POST" enctype="multipart/form-data" action="/analizar" class="needs-validation" novalidate>
+                            <div class="mb-3">
+                                <label class="form-label" for="archivo">Archivo CSV</label>
+                                <input class="form-control" type="file" name="archivo" id="archivo" accept=".csv" required>
+                                <div class="form-text">Asegúrate de que tenga columnas como <b>monto</b> y <b>categoria</b>.</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="presupuesto">Presupuesto</label>
+                                <input class="form-control" type="number" name="presupuesto" id="presupuesto" placeholder="Ingrese presupuesto" min="0" step="1" required>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100 fw-semibold">
+                                Analizar
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="text-center mt-3 text-muted small">
+                    Los resultados se mostrarán en la siguiente pantalla.
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
