@@ -13,7 +13,7 @@
 </head>
 
 <body>
-
+<!-- Barra de navegacion -->
     <nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom">
         <div class="container">
             <span class="navbar-brand fw-semibold">Analizador de Gastos</span>
@@ -21,26 +21,34 @@
         </div>
     </nav>
 
+    <!-- Contenido principal -->
     <main class="container py-5">
         <div class="row justify-content-center">
             <div class="col-12 col-md-8 col-lg-6">
+
+                <!-- Tarjeta central -->
                 <div class="card shadow-sm border-0">
                     <div class="card-body p-4">
+
+                        <!-- Titulo y descripcion -->
                         <h2 class="h4 mb-1">Sube tu archivo y define tu presupuesto</h2>
                         <p class="text-muted mb-4">Te mostraremos el total de gastos y el desglose por categoría.</p>
 
                         <form method="POST" enctype="multipart/form-data" action="/analizar" class="needs-validation" novalidate>
                             <div class="mb-3">
+                                <!-- Subir csv-->
                                 <label class="form-label" for="archivo">Archivo CSV</label>
                                 <input class="form-control" type="file" name="archivo" id="archivo" accept=".csv" required>
                                 <div class="form-text">Asegúrate de que tenga columnas como <b>monto</b> y <b>categoria</b>.</div>
                             </div>
 
+                            <!-- Ingresar el prespuesto -->
                             <div class="mb-3">
                                 <label class="form-label" for="presupuesto">Presupuesto</label>
                                 <input class="form-control" type="number" name="presupuesto" id="presupuesto" placeholder="Ingrese presupuesto" min="0" step="1" required>
                             </div>
 
+                            <!-- Empezar a analizar -->
                             <button type="submit" class="btn btn-primary w-100 fw-semibold">
                                 Analizar
                             </button>

@@ -1,12 +1,16 @@
 from flask import Flask, render_template, request
 from servicios.analizador import lector_archivo, calcular_total, calcular_por_categoria, verificar_presupuesto
+#Se importan las funciones del analizador
 
+# Inicializar flask
 app = Flask(__name__)
 
+# Ruta a la pagina principal
 @app.route("/")
 def inicio():
     return render_template("index.html")
 
+# Procesa el csv subido 
 @app.route("/analizar", methods=["POST"])
 def analizar():
     #Obtiene el archivo y el presupuesto del forms
@@ -39,5 +43,6 @@ def analizar():
                            resultado = resultado, 
                            presupuesto = presupuesto)
 
+#Ejecutar la aplicacion
 if __name__ == "__main__":
     app.run(debug=True)

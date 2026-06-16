@@ -13,7 +13,7 @@
 </head>
 
 <body>
-
+    <!-- Barra de navegacion -->
     <nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom">
         <div class="container">
             <span class="navbar-brand fw-semibold">Analizador de Gastos</span>
@@ -21,7 +21,9 @@
         </div>
     </nav>
 
+    <!-- Contenido principal -->
     <main class="container py-5">
+        <!-- Header de resultados -->
         <div class="d-flex align-items-end justify-content-between flex-wrap gap-2 mb-4">
             <div>
                 <h1 class="h3 mb-1">Resultados</h1>
@@ -29,6 +31,9 @@
             </div>
         </div>
 
+        <!-- Cards de resumen: presupuesto y gasto total -->
+
+        <!-- Prespuesto -->
         <div class="row g-3 mb-3">
             <div class="col-12 col-md-6">
                 <div class="card shadow-sm border-0 h-100">
@@ -42,6 +47,7 @@
                 </div>
             </div>
 
+            <!-- Gastos -->
             <div class="col-12 col-md-6">
                 <div class="card shadow-sm border-0 h-100">
                     <div class="card-body">
@@ -55,6 +61,7 @@
             </div>
         </div>
 
+        <!-- Alerta  -->
         <div class="mb-4">
             <div class="fw-semibold mb-2">¿Se superó el presupuesto?</div>
             {% if resultado %}
@@ -68,10 +75,12 @@
             {% endif %}
         </div>
 
+        <!-- Gastos por Categoria-->
         <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
             <h2 class="h5 mb-0">Total por categoría</h2>
         </div>
 
+        <!-- Tabla -->
         <div class="table-responsive text-light">
             <table class="table table-striped align-middle text-light">
                 <thead>
@@ -81,6 +90,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <!-- Generacion dinamica de filas por categoria -->
                     {% for categoria, total in totalxcategoria.items() %}
                     <tr>
                         <td>{{ categoria }}</td>
@@ -91,6 +101,7 @@
             </table>
         </div>
 
+        <!-- Boton para regresar a la pagina principal -->
         <div class="text-center mt-4">
             <a href="{{ url_for('inicio') }}" class="btn btn-primary btn-lg">
                 Analizar otro archivo
