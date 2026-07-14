@@ -27,7 +27,7 @@
         <div class="d-flex align-items-end justify-content-between flex-wrap gap-2 mb-4">
             <div>
                 <h1 class="h3 mb-1">Resultados</h1>
-                <p class="text-muted mb-0">Resumen de tu presupuesto vs. el total de gastos.</p>
+                <p class="text-muted mb-0">Periodo analizado: <strong class="text-primary">{{ periodo }}</strong></p>
             </div>
         </div>
 
@@ -43,6 +43,19 @@
                             <span class="badge text-bg-primary">Límite</span>
                         </div>
                         <h2 class="text-light mt-3 mb-0">${{ presupuesto }}</h2>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ingresos -->
+            <div class="col-12 col-md-6">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <h5 class="card-title mb-0 text-light">Ingresos Totales</h5>
+                            <span class="badge text-bg-warning">Sueldo/Extras</span>
+                        </div>
+                        <h2 class="text-light mt-3 mb-0">${{ total_ingresos }}</h2>
                     </div>
                 </div>
             </div>
@@ -63,14 +76,30 @@
 
         <!-- Alerta  -->
         <div class="mb-4">
-            <div class="fw-semibold mb-2">¿Se superó el presupuesto?</div>
-            {% if resultado %}
-                <div class="alert alert-danger mb-0" role="alert">
-                    Presupuesto superado.
+            <div class="fw-semibold mb-2">Estado de Salud Financiera:</div>
+            {% if semaforo == 'verde' %}
+                <div class="alert alert-success d-flex align-items-center mb-0" role="alert">
+                    <div>
+                        <strong>🟢 ¡Excelente control!</strong> Estás gastando el 70% o menos de tus ingresos. Vas por muy buen camino para tu ahorro.
+                    </div>
+                </div>
+            {% elif semaforo == 'amarillo' %}
+                <div class="alert alert-warning d-flex align-items-center mb-0" role="alert">
+                    <div>
+                        <strong>🟡 ¡Cuidado!</strong> Has gastado entre el 70% y el 90% de tus ingresos. Es momento de vigilar los gastos hormiga.
+                    </div>
+                </div>
+            {% elif semaforo == 'rojo' %}
+                <div class="alert alert-danger d-flex align-items-center mb-0" role="alert">
+                    <div>
+                        <strong>🔴 ¡Alerta Roja!</strong> Tus gastos superan el 90% de tus ingresos. Estás en una zona de riesgo financiero.
+                    </div>
                 </div>
             {% else %}
-                <div class="alert alert-success mb-0" role="alert">
-                    Presupuesto dentro del límite.
+                <div class="alert alert-info d-flex align-items-center mb-0" role="alert">
+                    <div>
+                        <strong>ℹ️ Sin ingresos registrados:</strong> Sube transacciones catalogadas como 'ingreso' para poder calcular tu semáforo de salud financiera.
+                    </div>
                 </div>
             {% endif %}
         </div>
