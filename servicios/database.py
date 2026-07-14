@@ -4,10 +4,10 @@ import os
 DB_PATH = os.path.join('data', 'gastos.db')
 
 def obtener_conexion():
-    """Garantiza que la carpeta 'data' exista y retorna la conexión a SQLite."""
+    #Garantiza que la carpeta 'data' exista y retorna la conexion a SQLite
     os.makedirs('data', exist_ok=True)
     conn = sqlite3.connect(DB_PATH)
-    # Row_factory nos permite acceder a los datos por nombre de columna: fila['monto']
+    # Row_factory permite acceder a los datos por nombre de columna: fila['monto']
     conn.row_factory = sqlite3.Row 
     return conn
 
@@ -16,7 +16,7 @@ def inicializar_db():
     conn = obtener_conexion()
     cursor = conn.cursor()
     
-    # Tabla de movimientos con la columna 'periodo' unificada (Formato: YYYY-MM)
+    # Tabla de movimientos
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS gastos (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -25,11 +25,11 @@ def inicializar_db():
             categoria TEXT,
             monto REAL NOT NULL,
             tipo TEXT NOT NULL,          -- 'gasto' o 'ingreso'
-            periodo TEXT NOT NULL        -- Periodo agrupador (YYYY-MM)
+            periodo TEXT NOT NULL        -- Periodo (YYYY-MM)
         )
     ''')
     
-    # Tabla de metas con periodo unificado
+    # Tabla de metas con periodo
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS metas (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -37,15 +37,12 @@ def inicializar_db():
             meta_ahorro REAL NOT NULL
         )
     ''')
-    
     conn.commit()
     conn.close()
 
 def guardar_gastos(lista_movimientos, periodo):
-    """
-    Guarda una lista de diccionarios en la base de datos.
-    Primero limpia el periodo para evitar duplicados si se resube el archivo.
-    """
+    #Guarda una lista de diccionarios en la base de datos.
+    #Primero limpia el periodo para evitar duplicados si se resube el archivo.
     conn = obtener_conexion()
     cursor = conn.cursor()
     
@@ -65,15 +62,12 @@ def guardar_gastos(lista_movimientos, periodo):
             mov['tipo'].lower(),
             periodo
         ))
-        
     conn.commit()
     conn.close()
 
 def obtener_gastos(periodo):
-    """
-    Recupera los movimientos de un periodo específico (YYYY-MM).
-    Retorna una lista de diccionarios nativos de Python.
-    """
+    #Recupera los movimientos de un periodo específico (YYYY-MM).
+    #Retorna una lista de diccionarios nativos de Python.
     conn = obtener_conexion()
     cursor = conn.cursor()
     cursor.execute(
@@ -83,11 +77,11 @@ def obtener_gastos(periodo):
     rows = cursor.fetchall()
     conn.close()
     
-    # Convertimos el resultado de SQLite en una lista de diccionarios estándar
+    # Se convierte el resultado de SQLite en una lista de diccionarios estandar
     return [dict(row) for row in rows]
 
 def obtener_periodos_disponibles():
-    """Retorna una lista de strings con los periodos guardados (ej: ['2026-07', '2026-06'])."""
+    #Retorna una lista de strings con los periodos guardados (ej: ['2026-07', '2026-06'])
     conn = obtener_conexion()
     cursor = conn.cursor()
     cursor.execute("SELECT DISTINCT periodo FROM gastos ORDER BY periodo DESC")
