@@ -46,6 +46,14 @@
 
                         <form method="POST" enctype="multipart/form-data" action="/analizar" class="needs-validation" novalidate>
                             
+                            <div class="mb-4">
+                                <p>Para comenzar, descarga nuestra plantilla estructurada, llena tus gastos e ingresos del mes, y súbela aquí.</p>
+                                <!-- botob de descarga -->
+                                <a href="{{ url_for('descargar_plantilla') }}" class="btn btn-outline-success">
+                                    📥 Descargar Plantilla Excel
+                                </a>
+                            </div>
+
                             <!-- Subir archivo -->
                             <div class="mb-3">
                                 <label class="form-label fw-medium" for="archivo">Archivo de Movimientos</label>

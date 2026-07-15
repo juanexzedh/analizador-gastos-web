@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, redirect, url_for
+from flask import Flask, render_template, request, flash, redirect, url_for, send_from_directory
 import os
 import pandas as pd
 from servicios.analizador import (lector_archivo, calcular_total, calcular_total_ingresos, calcular_por_categoria, verificar_presupuesto, calcular_semaforo)
@@ -80,7 +80,10 @@ def analizar():
     )
 
 @app.route('/descargar-plantilla')
-def poner_plantilla():
+def descargar_plantilla():
+    directorio_assets = os.path.join(app.root_path, 'static', 'assets')    
+    # as_attachment=True fuerza al navegador a descargarlo en lugar de intentar abrirlo
+    return send_from_directory(directorio_assets, 'plantilla.xlsx', as_attachment=True)
 
 if __name__ == "__main__":
     app.run(debug=True)
