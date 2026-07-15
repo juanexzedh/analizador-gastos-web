@@ -79,5 +79,8 @@ def analizar():
         semaforo=semaforo
     )
 
+@app.route('/descargar-plantilla')
+def poner_plantilla():
+
 if __name__ == "__main__":
     app.run(debug=True)
