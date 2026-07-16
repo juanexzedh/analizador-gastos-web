@@ -75,15 +75,16 @@ def analizar():
         semaforo = calcular_semaforo(total_gastos, total_ingresos)
 
         # Para calcular el dia con mas gasto
-        df['Fecha'] = pd.to_datetime(df['Fecha'], format='%d/%m/%Y', errors='coerce')
-        df['Dia_Semana'] = df['Fecha'].dt.day_name()
+        df['fecha'] = pd.to_datetime(df['fecha'], format='%d/%m/%Y', errors='coerce')
+        df['Dia_Semana'] = df['fecha'].dt.day_name()
         dias_espanol = {
             'Monday': 'Lunes', 'Tuesday': 'Martes', 'Wednesday': 'Miércoles',
             'Thursday': 'Jueves', 'Friday': 'Viernes', 'Saturday': 'Sábado', 'Sunday': 'Domingo'
         }
         df['Dia_Semana'] = df['Dia_Semana'].map(dias_espanol)
 
-        gastos_por_dia = df.groupby('Dia_Semana')['Monto'].sum()
+        gastos = df[df['tipo'] == 'gasto']
+        gastos_por_dia = gastos.groupby('Dia_Semana')['monto'].sum()
         dia_pico = gastos_por_dia.idxmax()
         monto_pico = gastos_por_dia.max()
 
