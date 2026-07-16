@@ -75,7 +75,6 @@ def analizar():
         total_ingresos=total_ingresos,
         totalxcategoria=totalxcategoria,
         supero_presupuesto=supero_presupuesto,
-        presupuesto=presupuesto,
         semaforo=semaforo
     )
 
@@ -83,7 +82,7 @@ def analizar():
 def descargar_plantilla():
     directorio_assets = os.path.join(app.root_path, 'static', 'assets')    
     # as_attachment=True fuerza al navegador a descargarlo en lugar de intentar abrirlo
-    return send_from_directory(directorio_assets, 'plantilla.xlsx', as_attachment=True)
+    return send_from_directory(directorio_assets, 'plantilla.xlsx', as_attachment=True, download_name='plantilla.xlsx', mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
 if __name__ == "__main__":
     app.run(debug=True)

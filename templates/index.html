@@ -45,7 +45,7 @@
                         <p class="text-muted mb-4 small">Calcularemos tus saldos, categorizaremos tus gastos automáticamente y evaluaremos tu salud financiera.</p>
 
                         <form method="POST" enctype="multipart/form-data" action="/analizar" class="needs-validation" novalidate>
-                            
+
                             <div class="mb-4">
                                 <p>Para comenzar, descarga nuestra plantilla estructurada, llena tus gastos e ingresos del mes, y súbela aquí.</p>
                                 <!-- botob de descarga -->
@@ -58,16 +58,7 @@
                             <div class="mb-3">
                                 <label class="form-label fw-medium" for="archivo">Archivo de Movimientos</label>
                                 <input class="form-control" type="file" name="archivo" id="archivo" accept=".csv, .xlsx" required>
-                                <div class="form-text small text-muted">Asegúrate de que tenga columnas como <b>monto</b>, <b>descripcion</b> y <b>tipo</b>.</div>
-                            </div>
-
-                            <!-- Ingresar el presupuesto -->
-                            <div class="mb-3"> 
-                                <label class="form-label fw-medium" for="presupuesto">Presupuesto Límite de Gastos</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">$</span>
-                                    <input class="form-control" type="number" name="presupuesto" id="presupuesto" placeholder="Ej: 1500000" min="0" step="1" required>
-                                </div>
+                                <div class="form-text small text-muted">Asegúrate de que tenga columnas dadas en la plantilla.</div>
                             </div>
 
                             <!-- Periodo -->
