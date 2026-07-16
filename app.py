@@ -8,6 +8,15 @@ from servicios.categorizer import categorizar
 app = Flask(__name__)
 app.secret_key = "clave_secreta_para_mensajes_flash" # Necesario para mostrar alertas amigables de error
 
+@app.template_filter('cop')
+def formato_cop(valor):
+    try:
+        # Formatea con comas como separador de miles, y luego las reemplaza por puntos
+        numero_formateado = f"{int(valor):,}".replace(',', '.')
+        return f"{numero_formateado} COP"
+    except (ValueError, TypeError):
+        return valor # Si falla, devuelve el valor original
+
 # Inicializar la base de datos al arrancar la app
 inicializar_db()
 

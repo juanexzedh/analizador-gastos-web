@@ -44,7 +44,7 @@
                             <h5 class="card-title mb-0 text-light">Ingresos Totales</h5>
                             <span class="badge text-bg-warning">Sueldo/Extras</span>
                         </div>
-                        <h2 class="text-light mt-3 mb-0">${{ total_ingresos }}</h2>
+                        <h2 class="text-light mt-3 mb-0">${{ total_ingresos | cop }}</h2>
                     </div>
                 </div>
             </div>
@@ -57,7 +57,7 @@
                             <h5 class="card-title mb-0 text-light" >Total</h5>
                             <span class="badge text-bg-warning">Gastos</span>
                         </div>
-                        <h2 class="text-light mt-3 mb-0">${{ total_gastos }}</h2>
+                        <h2 class="text-light mt-3 mb-0">${{ total_gastos | cop }}</h2>
                     </div>
                 </div>
             </div>
@@ -112,7 +112,7 @@
                     {% for categoria, total in totalxcategoria.items() %}
                     <tr>
                         <td>{{ categoria }}</td>
-                        <td>${{ total }}</td>
+                        <td>${{ total | cop }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
