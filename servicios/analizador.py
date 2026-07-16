@@ -18,6 +18,8 @@ def lector_archivo(ruta_archivo):
     # Limpieza para evitar errores de formato
     df['tipo'] = df['tipo'].astype(str).str.strip().str.lower()
     df['descripcion'] = df['descripcion'].astype(str).str.strip()
+    df['monto'] = pd.to_numeric(df['monto'], errors='coerce')
+    df['monto'] = df['monto'].fillna(0)
     
     # Si la columna 'categoria' no existe, se pone vacia para que el clasificador trabaje
     if 'categoria' not in df.columns:
