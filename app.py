@@ -24,6 +24,12 @@ inicializar_db()
 def inicio():
     return render_template("index.html")
 
+
+@app.route('/instructivo')
+def instructivo():
+    return render_template('instructivo.html')
+
+
 @app.route("/analizar", methods=["POST"])
 def analizar():
     archivo = request.files.get("archivo")
@@ -68,6 +74,19 @@ def analizar():
         supero_presupuesto = verificar_presupuesto(total_gastos, float(presupuesto))
         semaforo = calcular_semaforo(total_gastos, total_ingresos)
 
+        # Para calcular el dia con mas gasto
+        df['Fecha'] = pd.to_datetime(df['Fecha'], format='%d/%m/%Y', errors='coerce')
+        df['Dia_Semana'] = df['Fecha'].dt.day_name()
+        dias_espanol = {
+            'Monday': 'Lunes', 'Tuesday': 'Martes', 'Wednesday': 'Miércoles',
+            'Thursday': 'Jueves', 'Friday': 'Viernes', 'Saturday': 'Sábado', 'Sunday': 'Domingo'
+        }
+        df['Dia_Semana'] = df['Dia_Semana'].map(dias_espanol)
+
+        gastos_por_dia = df.groupby('Dia_Semana')['Monto'].sum()
+        dia_pico = gastos_por_dia.idxmax()
+        monto_pico = gastos_por_dia.max()
+
     except Exception as e:
         flash(f"Error procesando el archivo: {str(e)}")
         return redirect(url_for('inicio'))
@@ -84,7 +103,9 @@ def analizar():
         total_ingresos=total_ingresos,
         totalxcategoria=totalxcategoria,
         supero_presupuesto=supero_presupuesto,
-        semaforo=semaforo
+        semaforo=semaforo,
+        dia_pico=dia_pico,
+        monto_pico=monto_pico  
     )
 
 @app.route('/descargar-plantilla')
@@ -92,6 +113,12 @@ def descargar_plantilla():
     directorio_assets = os.path.join(app.root_path, 'static', 'assets')    
     # as_attachment=True fuerza al navegador a descargarlo en lugar de intentar abrirlo
     return send_from_directory(directorio_assets, 'plantilla.xlsx', as_attachment=True, download_name='plantilla.xlsx', mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+
+
+@app.route("/descargar-pdf/<periodo>")
+def descargar_pdf(periodo):
+    # Por ahora, una confirmación simple para verificar que el enlace funciona
+    return f"Generando reporte PDF para el periodo: {periodo}. (Lógica en construcción)"
 
 if __name__ == "__main__":
     app.run(debug=True)

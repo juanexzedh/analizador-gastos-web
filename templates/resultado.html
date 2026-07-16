@@ -119,6 +119,22 @@
             </table>
         </div>
 
+        <div class="col-12 col-md-12">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h5 class="card-title mb-0 text-light">🔥 Día de Mayor Gasto</h5>
+                        <span class="badge text-bg-secondary">{{ dia_pico }}</span>
+                    </div>
+                    <h2 class="text-light mt-3 mb-0">Total: ${{ monto_pico | cop }}</h2>
+                </div>
+            </div>
+        </div>
+        
+        <a href="{{ url_for('descargar_pdf', periodo=periodo) }}" class="btn btn-danger btn-lg shadow">
+            📄 Descargar Resumen en PDF
+        </a>
+
         <!-- Boton para regresar a la pagina principal -->
         <div class="text-center mt-4">
             <a href="{{ url_for('inicio') }}" class="btn btn-primary btn-lg">
