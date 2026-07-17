@@ -70,6 +70,7 @@ def analizar():
         # Calculos para el Dashboard
         total_gastos = calcular_total(df)
         total_ingresos = calcular_total_ingresos(df)
+        ahorrado = total_ingresos - total_gastos
         totalxcategoria = calcular_por_categoria(df)
         supero_presupuesto = verificar_presupuesto(total_gastos, float(presupuesto))
         semaforo = calcular_semaforo(total_gastos, total_ingresos)
@@ -106,7 +107,8 @@ def analizar():
         supero_presupuesto=supero_presupuesto,
         semaforo=semaforo,
         dia_pico=dia_pico,
-        monto_pico=monto_pico  
+        monto_pico=monto_pico,
+        ahorrado=ahorrado 
     )
 
 
