@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, flash, redirect, url_for, sen
 import os
 import pandas as pd
 from servicios.analizador import (lector_archivo, calcular_total, calcular_total_ingresos, calcular_por_categoria, verificar_presupuesto, calcular_semaforo)
-from servicios.database import inicializar_db, guardar_gastos, obtener_periodos_disponibles
+from servicios.database import inicializar_db, guardar_gastos, obtener_resumen_periodos, obtener_periodos_disponibles, obtener_gastos
 from servicios.categorizer import categorizar
 
 app = Flask(__name__)
@@ -75,7 +75,7 @@ def analizar():
         semaforo = calcular_semaforo(total_gastos, total_ingresos)
 
         # Para calcular el dia con mas gasto
-        df['fecha'] = pd.to_datetime(df['fecha'], format='%d/%m/%Y', errors='coerce')
+        df['fecha'] = pd.to_datetime(df['fecha'], dayfirst=True, errors='coerce')
         df['Dia_Semana'] = df['fecha'].dt.day_name()
         dias_espanol = {
             'Monday': 'Lunes', 'Tuesday': 'Martes', 'Wednesday': 'Miércoles',
@@ -108,6 +108,56 @@ def analizar():
         dia_pico=dia_pico,
         monto_pico=monto_pico  
     )
+
+
+@app.route("/historial")
+def historial():
+    # Cargar los datos base de la pagina
+    datos_historial = obtener_resumen_periodos()
+    periodos_simples = obtener_periodos_disponibles() 
+    
+    # Capturar posibles parámetros de comparacion en la URL
+    mes_a = request.args.get('mes_a')
+    mes_b = request.args.get('mes_b')
+    tabla_comparativa = None  # Por defecto no hay tabla
+
+    # Si el usuario selecciono dos meses, hacemos el calculo de Pandas
+    if mes_a and mes_b:
+        datos_a = obtener_gastos(mes_a)
+        datos_b = obtener_gastos(mes_b)
+        
+        df_a = pd.DataFrame(datos_a)
+        df_b = pd.DataFrame(datos_b)
+        
+        if not df_a.empty:
+            gastos_a = df_a[df_a['tipo'] == 'gasto'].groupby('categoria')['monto'].sum().reset_index()
+        else:
+            gastos_a = pd.DataFrame(columns=['categoria', 'monto'])
+            
+        if not df_b.empty:
+            gastos_b = df_b[df_b['tipo'] == 'gasto'].groupby('categoria')['monto'].sum().reset_index()
+        else:
+            gastos_b = pd.DataFrame(columns=['categoria', 'monto'])
+            
+        df_comparativo = pd.merge(gastos_a, gastos_b, on='categoria', how='outer', suffixes=('_a', '_b')).fillna(0)
+        df_comparativo['diferencia_pesos'] = df_comparativo['monto_b'] - df_comparativo['monto_a']
+        df_comparativo['diferencia_porcentaje'] = df_comparativo.apply(
+            lambda row: (row['diferencia_pesos'] / row['monto_a'] * 100) if row['monto_a'] > 0 else 100.0, 
+            axis=1
+        )
+        
+        tabla_comparativa = df_comparativo.to_dict(orient='records')
+
+    # Enviar todo al mismo HTML
+    return render_template(
+        'historial.html', 
+        historial=datos_historial, 
+        periodos=periodos_simples,
+        tabla=tabla_comparativa,#puede ser none
+        mes_a=mes_a,
+        mes_b=mes_b
+    )
+
 
 @app.route('/descargar-plantilla')
 def descargar_plantilla():

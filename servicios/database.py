@@ -88,3 +88,39 @@ def obtener_periodos_disponibles():
     periodos = cursor.fetchall()
     conn.close()
     return [row['periodo'] for row in periodos]
+
+def obtener_resumen_periodos():
+    conn = obtener_conexion()
+    cursor = conn.cursor()
+    consulta = """
+        SELECT 
+            periodo,
+            SUM(CASE WHEN tipo = 'gasto' THEN monto ELSE 0 END) as total_gastos,
+            SUM(CASE WHEN tipo = 'ingreso' THEN monto ELSE 0 END) as total_ingresos
+        FROM gastos
+        GROUP BY periodo
+        ORDER BY periodo DESC
+    """
+    cursor.execute(consulta)
+    filas = cursor.fetchall()
+    conn.close()
+    
+    resumen = []
+    for fila in filas:
+        periodo = fila['periodo']
+        anio, mes = periodo.split('-') if '-' in periodo else (periodo, "")
+        
+        gastos = fila['total_gastos'] or 0
+        ingresos = fila['total_ingresos'] or 0
+        balance = ingresos - gastos
+        
+        resumen.append({
+            'periodo': periodo,
+            'mes': mes,
+            'anio': anio,
+            'gastos': gastos,
+            'ingresos': ingresos,
+            'balance': balance
+        })
+        
+    return resumen

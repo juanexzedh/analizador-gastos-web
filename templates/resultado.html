@@ -130,13 +130,12 @@
                 </div>
             </div>
         </div>
-        
-        <a href="{{ url_for('descargar_pdf', periodo=periodo) }}" class="btn btn-danger btn-lg shadow">
-            📄 Descargar Resumen en PDF
-        </a>
 
         <!-- Boton para regresar a la pagina principal -->
         <div class="text-center mt-4">
+            <a href="{{ url_for('descargar_pdf', periodo=periodo) }}" class="btn btn-danger btn-lg shadow">
+                📄 Descargar Resumen en PDF
+            </a>
             <a href="{{ url_for('inicio') }}" class="btn btn-primary btn-lg">
                 Analizar otro archivo
             </a>

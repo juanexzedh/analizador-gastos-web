@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Historial</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" 
+        rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container mt-4">
+        <!-- Sección 1: La herramienta de comparación que sugeriste -->
+        <div class="card shadow-sm border-0 mb-5 bg-dark text-light">
+            <div class="card-body">
+                <h5 class="card-title">⚖️ Comparar Periodos</h5>
+                <p class="text-secondary small">Selecciona dos meses para ver la diferencia de gastos por categoría.</p>
+                
+                <form action="/historial" method="GET" class="row g-3 align-items-center mt-2">
+                    <div class="col-md-4">
+                        <select name="mes_a" class="form-select bg-dark text-light border-secondary" required>
+                            <option value="">Selecciona el Mes A...</option>
+                            {% for p in periodos %}
+                                <option value="{{ p }}">{{ p }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <select name="mes_b" class="form-select bg-dark text-light border-secondary" required>
+                            <option value="">Selecciona el Mes B...</option>
+                            {% for p in periodos %}
+                                <option value="{{ p }}">{{ p }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-outline-info w-100">Comparar</button>
+                    </div>
+                </form>
+
+                <!-- Bloque dinamico: Solo aparece si existe una comparacion -->
+                {% if tabla %}
+                <div class="card bg-dark text-light border-info mb-5 shadow">
+                    <div class="card-header bg-info text-dark fw-bold">
+                        📊 Comparación: {{ mes_a }} vs {{ mes_b }}
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-dark table-hover mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Categoría</th>
+                                        <th>Gasto en {{ mes_a }}</th>
+                                        <th>Gasto en {{ mes_b }}</th>
+                                        <th>Diferencia ($)</th>
+                                        <th>Variación (%)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for fila in tabla %}
+                                    <tr>
+                                        <td>{{ fila.categoria }}</td>
+                                        <td>{{ fila.monto_a | cop }}</td>
+                                        <td>{{ fila.monto_b | cop }}</td>
+                                        <td>{{ fila.diferencia_pesos | cop }}</td>
+                                        <td>{{ "{:,.1f}".format(fila.diferencia_porcentaje) }}%</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!--Historial -->
+        <h4 class="text-light mb-4">Historial de Registros</h4>
+        
+        {% for item in historial %}
+        <div class="card bg-dark text-light border-secondary mb-3 shadow-sm">
+            <div class="row g-0 align-items-center">
+                <div class="col-md-2 text-center p-3 border-end border-secondary">
+                    <h3 class="mb-0 text-info">{{ item.mes }}</h3>
+                    <small class="text-muted">{{ item.anio }}</small>
+                </div>
+                <div class="col-md-7 p-3">
+                    <div class="row text-center">
+                        <div class="col-4">
+                            <small class="text-muted d-block">Ingresos</small>
+                            <span class="text-success">{{ item.ingresos | cop }}</span>
+                        </div>
+                        <div class="col-4">
+                            <small class="text-muted d-block">Gastos</small>
+                            <span class="text-danger">{{ item.gastos | cop }}</span>
+                        </div>
+                        <div class="col-4">
+                            <small class="text-muted d-block">Balance</small>
+                            <span class="text-light fw-bold">{{ item.balance | cop }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 p-3 text-center">
+                    <!-- Botón para cargar el dashboard de este mes -->
+                    <a href="#" class="btn btn-primary w-100">Ver Detalles</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</body>
