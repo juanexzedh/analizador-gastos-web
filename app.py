@@ -4,9 +4,12 @@ import pandas as pd
 from servicios.analizador import (lector_archivo, calcular_total, calcular_total_ingresos, calcular_por_categoria, verificar_presupuesto, calcular_semaforo)
 from servicios.database import inicializar_db, guardar_gastos, obtener_resumen_periodos, obtener_periodos_disponibles, obtener_gastos
 from servicios.categorizer import categorizar
+from servicios.pdf_doc import generar_pdf
+from servicios.predictor import proyectar_cierre, predecir_proximo_mes
 import calendar
 from datetime import datetime
-from servicios.predictor import proyectar_cierre, predecir_proximo_mes
+from flask import send_file
+from io import BytesIO
 
 app = Flask(__name__)
 app.secret_key = "clave_secreta_para_mensajes_flash" # Necesario para mostrar alertas amigables de error
@@ -183,10 +186,21 @@ def descargar_plantilla():
     return send_from_directory(directorio_assets, 'plantilla.xlsx', as_attachment=True, download_name='plantilla.xlsx', mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
 
-@app.route("/descargar-pdf/<periodo>")
-def descargar_pdf(periodo):
-    # Por ahora, una confirmación simple para verificar que el enlace funciona
-    return f"Generando reporte PDF para el periodo: {periodo}. (Lógica en construcción)"
+@app.route('/descargar-pdf/<mes>/<anio>')
+def descargar_pdf(mes, anio):
+    # Formatear el periodo para la base de datos
+    periodo = f"{anio}-{mes}"
+
+    datos_mes = obtener_gastos(periodo)
+    pdf_bytes = generar_pdf(mes, anio, datos_mes)
+    
+    # Enviar el archivo como adjunto para que se descargue
+    return send_file(
+        BytesIO(pdf_bytes),
+        mimetype='application/pdf',
+        as_attachment=True,
+        download_name=f'Reporte_{mes}_{anio}.pdf'
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)

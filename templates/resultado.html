@@ -174,9 +174,7 @@
     </div>
 
         <div class="text-center mt-4">
-            <a href="{{ url_for('descargar_pdf', periodo=periodo) }}" class="btn btn-danger btn-lg shadow">
-                📄 Descargar Resumen en PDF
-            </a>
+            <a href="{{ url_for('descargar_pdf', mes=periodo.split('-')[1], anio=periodo.split('-')[0])}}" class="btn btn-danger">📄 Descargar Reporte PDF</a>
             <a href="{{ url_for('inicio') }}" class="btn btn-primary btn-lg">
                 Analizar otro archivo
             </a>
