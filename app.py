@@ -70,7 +70,7 @@ def analizar():
         lista_movimientos = df.to_dict(orient='records')
         guardar_gastos(lista_movimientos, periodo)
 
-        # Calculos para el Dashboard
+        # DATOS PARA DASHBOARD-----------------
         total_gastos = calcular_total(df)
         total_ingresos = calcular_total_ingresos(df)
         ahorrado = total_ingresos - total_gastos
@@ -78,7 +78,7 @@ def analizar():
         supero_presupuesto = verificar_presupuesto(total_gastos, float(presupuesto))
         semaforo = calcular_semaforo(total_gastos, total_ingresos)
 
-        # Para calcular el dia con mas gasto
+        # CALCULAR DIA CON MAS GASTO-----------
         df['fecha'] = pd.to_datetime(df['fecha'], dayfirst=True, errors='coerce')
         df['Dia_Semana'] = df['fecha'].dt.day_name()
         dias_espanol = {
@@ -91,6 +91,16 @@ def analizar():
         gastos_por_dia = gastos.groupby('Dia_Semana')['monto'].sum()
         dia_pico = gastos_por_dia.idxmax()
         monto_pico = gastos_por_dia.max()
+
+        # PREDICCION------------------------------
+        hoy = datetime.now()
+        dia_actual = hoy.day
+        # monthrange devuelve una tupla, el indice [1] da los dias del mes
+        dias_en_mes = calendar.monthrange(hoy.year, hoy.month)[1] 
+
+        proyeccion = proyectar_cierre(df, dia_actual, dias_en_mes)
+        historial = obtener_resumen_periodos()
+        prediccion_ml = predecir_proximo_mes(historial)
 
     except Exception as e:
         flash(f"Error procesando el archivo: {str(e)}")
@@ -111,7 +121,9 @@ def analizar():
         semaforo=semaforo,
         dia_pico=dia_pico,
         monto_pico=monto_pico,
-        ahorrado=ahorrado 
+        ahorrado=ahorrado, 
+        proyeccion=proyeccion,
+        prediccion_ml=prediccion_ml
     )
 
 

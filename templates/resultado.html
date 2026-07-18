@@ -37,7 +37,7 @@
         <div class="row g-3 mb-3">
 
             <!-- Ingresos -->
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-4">
                 <div class="card shadow-sm border-0 h-100">
                     <div class="card-body">
                         <div class="d-flex align-items-center justify-content-between">
@@ -50,7 +50,7 @@
             </div>
 
             <!-- Gastos -->
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-4">
                 <div class="card shadow-sm border-0 h-100">
                     <div class="card-body">
                         <div class="d-flex align-items-center justify-content-between">
@@ -63,7 +63,7 @@
             </div>
 
             <!-- Ahorrado -->
-             <div class="col-md-4 mb-3">
+             <div class="col-12 col-md-4">
                 <div class="card bg-dark border-success text-light shadow h-100">
                     <div class="card-body text-center">
                         <h6 class="text-muted">💰 Ahorrado (Sin gastar)</h6>
@@ -141,7 +141,38 @@
             </div>
         </div>
 
-        <!-- Boton para regresar a la pagina principal -->
+        <div class="row mt-4">
+
+    <div class="row mt-4">
+        <!-- Proyeccion del mes actual -->
+        <div class="col-md-6 mb-3">
+            <div class="card bg-dark border-info text-light shadow h-100">
+                <div class="card-body">
+                    <h5 class="card-title text-info">📈 Proyección a fin de mes</h5>
+                    <p class="text-muted small">Basado en tu ritmo de gasto actual.</p>
+                    <h3>{{ proyeccion | cop }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Prediccion ML siguiente mes -->
+        <div class="col-md-6 mb-3">
+            <div class="card bg-dark border-warning text-light shadow h-100">
+                <div class="card-body">
+                    <h5 class="card-title text-warning">🤖 Predicción próximo mes</h5>
+                    
+                    {% if prediccion_ml.estado == 'exito' %}
+                        <p class="text-muted small">Cálculo de Machine Learning basado en tu historial.</p>
+                        <h3>{{ prediccion_ml.prediccion | cop }}</h3>
+                    {% else %}
+                        <p class="text-muted small">Modelo en entrenamiento...</p>
+                        <p class="text-danger mb-0">{{ prediccion_ml.mensaje }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
         <div class="text-center mt-4">
             <a href="{{ url_for('descargar_pdf', periodo=periodo) }}" class="btn btn-danger btn-lg shadow">
                 📄 Descargar Resumen en PDF
