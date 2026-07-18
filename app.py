@@ -4,6 +4,9 @@ import pandas as pd
 from servicios.analizador import (lector_archivo, calcular_total, calcular_total_ingresos, calcular_por_categoria, verificar_presupuesto, calcular_semaforo)
 from servicios.database import inicializar_db, guardar_gastos, obtener_resumen_periodos, obtener_periodos_disponibles, obtener_gastos
 from servicios.categorizer import categorizar
+import calendar
+from datetime import datetime
+from servicios.predictor import proyectar_cierre, predecir_proximo_mes
 
 app = Flask(__name__)
 app.secret_key = "clave_secreta_para_mensajes_flash" # Necesario para mostrar alertas amigables de error
