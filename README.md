@@ -304,7 +304,7 @@ La predicción se basa exclusivamente en el comportamiento histórico almacenado
 
 ## Vista
 
-![Resultados Septiembre](/images/Resultado_Septiembre.jpg)
+![Resultados Septiembre](/images/Resultados_Septiembre.jpg)
 
 ---
 
