@@ -117,7 +117,7 @@ Asistente-Financiero/
 ## 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/tu-usuario/asistente-financiero.git
+git clone https://github.com/juanexzedh/analizador-gastos-web
 cd asistente-financiero
 ```
 
@@ -144,7 +144,7 @@ source venv/bin/activate
 ## 3. Instalar dependencias
 
 ```bash
-pip install flask pandas openpyxl reportlab scikit-learn
+pip install requirements
 ```
 
 ---
