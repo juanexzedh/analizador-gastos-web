@@ -177,7 +177,7 @@ También encontrará un acceso directo al instructivo, donde se especifica el fo
 
 ## Vista
 
-![Página de Inicio](/images/inicio.jpg)
+![Página de Inicio](/images/Pagina_Inicio.jpg)
 
 ---
 
