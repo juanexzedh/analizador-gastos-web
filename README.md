@@ -144,7 +144,7 @@ source venv/bin/activate
 ## 3. Instalar dependencias
 
 ```bash
-pip install requirements
+pip install requirements.txt
 ```
 
 ---
@@ -177,11 +177,7 @@ También encontrará un acceso directo al instructivo, donde se especifica el fo
 
 ## Vista
 
-<!-- ============================ -->
-<!-- INSERTAR IMAGEN AQUÍ -->
-<!-- Página de Inicio -->
-<!-- static/screenshots/inicio.png -->
-<!-- ============================ -->
+![Página de Inicio](/images/inicio.jpg)
 
 ---
 
@@ -198,11 +194,7 @@ Este formato garantiza que Pandas pueda interpretar correctamente la informació
 
 ## Vista
 
-<!-- ============================ -->
-<!-- INSERTAR IMAGEN AQUÍ -->
-<!-- Instructivo -->
-<!-- static/screenshots/instructivo.png -->
-<!-- ============================ -->
+![Instructivo](/images/instructivo.jpg)
 
 ---
 
@@ -221,11 +213,7 @@ Al subir el archivo, Pandas realiza:
 
 ## Vista
 
-<!-- ============================ -->
-<!-- INSERTAR IMAGEN AQUÍ -->
-<!-- Esquema Excel Agosto -->
-<!-- static/screenshots/esquema_agosto.png -->
-<!-- ============================ -->
+![Excel de Agosto](/images/Excel_Agosto.jpg)
 
 ---
 
@@ -245,11 +233,7 @@ El sistema informa al usuario que necesita un tercer periodo para habilitar dich
 
 ## Vista
 
-<!-- ============================ -->
-<!-- INSERTAR IMAGEN AQUÍ -->
-<!-- Resultados Agosto -->
-<!-- static/screenshots/dashboard_agosto.png -->
-<!-- ============================ -->
+![Resultados de Agosto](/images/Resultados_Agosto.jpg)
 
 ---
 
@@ -269,11 +253,7 @@ Todo el PDF es generado dinámicamente mediante ReportLab.
 
 ## Vista
 
-<!-- ============================ -->
-<!-- INSERTAR IMAGEN AQUÍ -->
-<!-- Documento PDF -->
-<!-- static/screenshots/pdf.png -->
-<!-- ============================ -->
+![PDF descargable](/images/PDF_descargado.jpg)
 
 ---
 
@@ -304,19 +284,7 @@ Los resultados se presentan mediante colores condicionales:
 
 ## Vista
 
-<!-- ============================ -->
-<!-- INSERTAR IMAGEN AQUÍ -->
-<!-- Historial -->
-<!-- static/screenshots/historial.png -->
-<!-- ============================ -->
-
-<br>
-
-<!-- ============================ -->
-<!-- INSERTAR IMAGEN AQUÍ -->
-<!-- Comparación Julio Agosto -->
-<!-- static/screenshots/comparacion.png -->
-<!-- ============================ -->
+![Historial y Comparacion](/images/Historial_Comparacion.jpg)
 
 ---
 
@@ -336,11 +304,7 @@ La predicción se basa exclusivamente en el comportamiento histórico almacenado
 
 ## Vista
 
-<!-- ============================ -->
-<!-- INSERTAR IMAGEN AQUÍ -->
-<!-- Dashboard Septiembre -->
-<!-- static/screenshots/dashboard_septiembre.png -->
-<!-- ============================ -->
+![Resultados Septiembre](/images/Resultado_Septiembre.jpg)
 
 ---
 
