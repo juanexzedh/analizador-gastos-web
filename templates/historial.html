@@ -107,6 +107,12 @@
             </div>
         </div>
         {% endfor %}
+
+        <form action="{{ url_for('borrar_todo') }}" method="POST" onsubmit="return confirm('⚠️ ¿Estás completamente seguro de borrar TODO el historial? Esta acción no se puede deshacer.');">
+            <button type="submit" class="btn btn-outline-danger">
+                🗑️ Borrar Historial
+            </button>
+        </form>
     </div>
 
 </body>

@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, flash, redirect, url_for, sen
 import os
 import pandas as pd
 from servicios.analizador import (lector_archivo, calcular_total, calcular_total_ingresos, calcular_por_categoria, verificar_presupuesto, calcular_semaforo)
-from servicios.database import inicializar_db, guardar_gastos, obtener_resumen_periodos, obtener_periodos_disponibles, obtener_gastos
+from servicios.database import inicializar_db, guardar_gastos, obtener_resumen_periodos, obtener_periodos_disponibles, obtener_gastos, vaciar_registros
 from servicios.categorizer import categorizar
 from servicios.pdf_doc import generar_pdf
 from servicios.predictor import proyectar_cierre, predecir_proximo_mes
@@ -201,6 +201,11 @@ def descargar_pdf(mes, anio):
         as_attachment=True,
         download_name=f'Reporte_{mes}_{anio}.pdf'
     )
+
+@app.route('/borrar-todo', methods=['POST'])
+def borrar_todo():
+    vaciar_registros() 
+    return redirect(url_for('inicio'))
 
 if __name__ == "__main__":
     app.run(debug=True)

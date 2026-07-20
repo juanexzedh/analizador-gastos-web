@@ -118,8 +118,8 @@ def obtener_resumen_periodos():
 
 def vaciar_registros():
     #Elimina todos los registros de la tabla
-    conn = obterner_conexion()
-    cursor = conexion.cursor()
+    conn = obtener_conexion()
+    cursor = conn.cursor()
     
     try:
         cursor.execute("DELETE FROM gastos")
