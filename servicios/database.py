@@ -28,15 +28,6 @@ def inicializar_db():
             periodo TEXT NOT NULL        -- Periodo (YYYY-MM)
         )
     ''')
-    
-    # Tabla de metas con periodo
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS metas (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            periodo TEXT NOT NULL UNIQUE, -- Periodo (YYYY-MM) único
-            meta_ahorro REAL NOT NULL
-        )
-    ''')
     conn.commit()
     conn.close()
 
@@ -124,3 +115,17 @@ def obtener_resumen_periodos():
         })
         
     return resumen
+
+def vaciar_registros():
+    #Elimina todos los registros de la tabla
+    conn = obterner_conexion()
+    cursor = conexion.cursor()
+    
+    try:
+        cursor.execute("DELETE FROM gastos")
+        conn.commit()
+        print("¡Todos los registros han sido eliminados de forma exitosa!")
+    except sqlite3.Error as e:
+        print(f"Error al vaciar la tabla: {e}")
+    finally:
+        conn.close()
